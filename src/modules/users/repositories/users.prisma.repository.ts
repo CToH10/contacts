@@ -71,7 +71,6 @@ export class UsersPrismaRepository implements UserRepository {
     const findUser: User | null = await this.prisma.user.findUnique({
       where: { email },
     });
-
     return findUser;
   }
 }

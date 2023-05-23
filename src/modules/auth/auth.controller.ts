@@ -7,7 +7,7 @@ import { User } from '@prisma/client';
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  // @UseGuards(LocalAuthGuard)
+  @UseGuards(LocalAuthGuard)
   @Post()
   async login(@Body() user: User) {
     return this.authService.login(user);

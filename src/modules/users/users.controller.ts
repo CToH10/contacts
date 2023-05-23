@@ -9,6 +9,8 @@ import {
   UseInterceptors,
   ClassSerializerInterceptor,
   UseGuards,
+  Request,
+  HttpException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -35,19 +37,43 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id') id: string, @Request() request: any) {
+    const currentUserId = request.user.id;
+
+    if (currentUserId !== id) {
+      throw new HttpException('You shall not pass', 403);
+    }
+
     return this.usersService.findOne(id);
   }
 
+  @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateUserDto: UpdateUserDto,
+    @Request() request: any,
+  ) {
+    const currentUserId = request.user.id;
+
+    if (currentUserId !== id) {
+      throw new HttpException('You shall not pass', 403);
+    }
+
     return this.usersService.update(id, updateUserDto);
   }
 
+  @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  remove(@Param('id') id: string, @Request() request: any) {
+    const currentUserId = request.user.id;
+
+    if (currentUserId !== id) {
+      throw new HttpException('You shall not pass', 403);
+    }
+
     return this.usersService.remove(id);
   }
 }
