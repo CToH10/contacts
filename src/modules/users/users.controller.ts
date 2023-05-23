@@ -10,6 +10,7 @@ import {
   ClassSerializerInterceptor,
   UseGuards,
   Request,
+  ForbiddenException,
   HttpException,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
@@ -23,7 +24,12 @@ export class UsersController {
 
   @UseInterceptors(ClassSerializerInterceptor)
   @Post()
-  create(@Body() createUserDto: CreateUserDto) {
+  async create(@Body() createUserDto: CreateUserDto) {
+    const emailExists = await this.usersService.findEmail(createUserDto.email);
+
+    if (emailExists) {
+      throw new HttpException('Email already registered', 409);
+    }
     return this.usersService.create(createUserDto);
   }
 
@@ -41,7 +47,7 @@ export class UsersController {
     const currentUserId = request.user.id;
 
     if (currentUserId !== id) {
-      throw new HttpException('You shall not pass', 403);
+      throw new ForbiddenException('You shall not pass');
     }
 
     return this.usersService.findOne(id);
@@ -58,7 +64,7 @@ export class UsersController {
     const currentUserId = request.user.id;
 
     if (currentUserId !== id) {
-      throw new HttpException('You shall not pass', 403);
+      throw new ForbiddenException('You shall not pass');
     }
 
     return this.usersService.update(id, updateUserDto);
@@ -71,7 +77,7 @@ export class UsersController {
     const currentUserId = request.user.id;
 
     if (currentUserId !== id) {
-      throw new HttpException('You shall not pass', 403);
+      throw new ForbiddenException('You shall not pass');
     }
 
     return this.usersService.remove(id);
