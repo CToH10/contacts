@@ -12,6 +12,7 @@ import {
   Request,
   ForbiddenException,
   HttpException,
+  HttpCode,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -89,6 +90,7 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @Delete(':id')
+  @HttpCode(204)
   remove(@Param('id') id: string, @Request() request: any) {
     const currentUserId = request.user.id;
 
