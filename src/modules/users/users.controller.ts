@@ -56,7 +56,7 @@ export class UsersController {
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @Patch(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateUserDto: UpdateUserDto,
     @Request() request: any,
@@ -65,6 +65,16 @@ export class UsersController {
 
     if (currentUserId !== id) {
       throw new ForbiddenException('You shall not pass');
+    }
+
+    if (updateUserDto.email) {
+      const emailExists = await this.usersService.findEmail(
+        updateUserDto.email,
+      );
+
+      if (emailExists && emailExists.id !== id) {
+        throw new HttpException('Email already registered', 409);
+      }
     }
 
     return this.usersService.update(id, updateUserDto);
