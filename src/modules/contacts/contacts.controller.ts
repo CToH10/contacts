@@ -39,13 +39,9 @@ export class ContactsController {
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @Get()
-  findAll(
-    @Request() request: any,
-    @Query('name') name: string | undefined,
-    @Query('email') email: string | undefined,
-  ) {
+  findAll(@Request() request: any, @Query('name') name: string | undefined) {
     const userId: string = request.user.id;
-    return this.contactsService.findAll(userId, name, email);
+    return this.contactsService.findAll(userId, name);
   }
 
   @ApiBearerAuth()

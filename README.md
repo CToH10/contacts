@@ -249,7 +249,7 @@ Expected result:
 <br>
 List all contacts registered to logged user.
 <br>
-Can provide query params <mark>name</mark> and <mark>email</mark> to find corresponding contacts.
+Can provide query param <mark>name</mark> to search for name or email and find corresponding contacts.
 <br>
 Expected result:
 

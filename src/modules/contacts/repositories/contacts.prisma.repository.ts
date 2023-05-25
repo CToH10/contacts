@@ -20,17 +20,19 @@ export class ContactsPrismaRepository implements ContactsRepository {
     return plainToInstance(Contact, createdContact);
   }
 
-  async findAll(
-    user: string,
-    name: string | undefined,
-    email: string | undefined,
-  ): Promise<Contact[]> {
+  async findAll(user: string, name: string | undefined): Promise<Contact[]> {
     const contactList: Contact[] = await this.prisma.contact.findMany({
       where: {
         userId: user,
-        fullName: { contains: name },
-        email: {
-          contains: email,
+        AND: {
+          OR: [
+            { fullName: { contains: name } },
+            {
+              email: {
+                contains: name,
+              },
+            },
+          ],
         },
       },
     });
