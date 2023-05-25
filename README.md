@@ -18,7 +18,7 @@ Once running, you can find a swagger version of the docs at `/docs`.
 <br>
 And test it with:
 <br>
-[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=Contacts&uri=https%3A%2F%2Fgithub.com%2FCToH10%2Fcontacts%2Fblob%2Fdocs%2FInsomnia_2023-05-25.json)
+[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?label=Contacts&uri=https%3A%2F%2Fgithub.com%2FCToH10%2Fcontacts%2Fblob%2Fdevelop%2FInsomnia_2023-05-25.json)
 
 ## Installation
 
