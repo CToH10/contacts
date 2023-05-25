@@ -26,10 +26,11 @@ export class ContactsPrismaRepository implements ContactsRepository {
         userId: user,
         AND: {
           OR: [
-            { fullName: { contains: name } },
+            { fullName: { contains: name, mode: 'insensitive' } },
             {
               email: {
                 contains: name,
+                mode: 'insensitive',
               },
             },
           ],
