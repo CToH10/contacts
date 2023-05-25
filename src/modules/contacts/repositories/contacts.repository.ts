@@ -10,7 +10,6 @@ export abstract class ContactsRepository {
   abstract findAll(
     user: string,
     name: string | undefined,
-    email: string | undefined,
   ): Promise<Contact[]> | Contact[];
   abstract findOne(id: string): Promise<Contact> | Contact;
   abstract update(
