@@ -10,16 +10,20 @@ import {
   UseGuards,
   UseInterceptors,
   Request,
+  HttpCode,
 } from '@nestjs/common';
 import { ContactsService } from './contacts.service';
 import { CreateContactDto } from './dto/create-contact.dto';
 import { UpdateContactDto } from './dto/update-contact.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('contacts')
 @Controller('contacts')
 export class ContactsController {
   constructor(private readonly contactsService: ContactsService) {}
 
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @Post()
@@ -28,6 +32,7 @@ export class ContactsController {
     return this.contactsService.create(createContactDto, userId);
   }
 
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @Get()
@@ -36,6 +41,7 @@ export class ContactsController {
     return this.contactsService.findAll(userId);
   }
 
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @Get(':id')
@@ -43,6 +49,7 @@ export class ContactsController {
     return this.contactsService.findOne(id);
   }
 
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @Patch(':id')
@@ -50,9 +57,11 @@ export class ContactsController {
     return this.contactsService.update(id, updateContactDto);
   }
 
+  @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @Delete(':id')
+  @HttpCode(204)
   remove(@Param('id') id: string) {
     return this.contactsService.remove(id);
   }
