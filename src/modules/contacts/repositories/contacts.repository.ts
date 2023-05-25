@@ -7,7 +7,11 @@ export abstract class ContactsRepository {
     data: CreateContactDto,
     user: string,
   ): Promise<Contact> | Contact;
-  abstract findAll(user: string): Promise<Contact[]> | Contact[];
+  abstract findAll(
+    user: string,
+    name: string | undefined,
+    email: string | undefined,
+  ): Promise<Contact[]> | Contact[];
   abstract findOne(id: string): Promise<Contact> | Contact;
   abstract update(
     id: string,

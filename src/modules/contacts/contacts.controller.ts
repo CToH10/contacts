@@ -11,6 +11,7 @@ import {
   UseInterceptors,
   Request,
   HttpCode,
+  Query,
 } from '@nestjs/common';
 import { ContactsService } from './contacts.service';
 import { CreateContactDto } from './dto/create-contact.dto';
@@ -36,9 +37,13 @@ export class ContactsController {
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @Get()
-  findAll(@Request() request: any) {
+  findAll(
+    @Request() request: any,
+    @Query('name') name: string | undefined,
+    @Query('email') email: string | undefined,
+  ) {
     const userId: string = request.user.id;
-    return this.contactsService.findAll(userId);
+    return this.contactsService.findAll(userId, name, email);
   }
 
   @ApiBearerAuth()
