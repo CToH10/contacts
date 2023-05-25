@@ -1,16 +1,17 @@
-// import { Expose, Type } from 'class-transformer';
-import { Exclude } from 'class-transformer';
+import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
-// import { CreateUserDto } from 'src/modules/users/dto/create-user.dto';
 
 export class CreateContactDto {
+  @ApiProperty()
   @IsNotEmpty()
   @IsString()
   fullName: string;
 
+  @ApiProperty()
   @IsEmail()
   email: string;
 
+  @ApiProperty()
   @IsNotEmpty()
   @IsString()
   phone: string;
