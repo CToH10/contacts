@@ -11,12 +11,13 @@ import {
   UseInterceptors,
   Request,
   HttpCode,
+  Query,
 } from '@nestjs/common';
 import { ContactsService } from './contacts.service';
 import { CreateContactDto } from './dto/create-contact.dto';
 import { UpdateContactDto } from './dto/update-contact.dto';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags, ApiQuery } from '@nestjs/swagger';
 
 @ApiTags('contacts')
 @Controller('contacts')
@@ -33,12 +34,18 @@ export class ContactsController {
   }
 
   @ApiBearerAuth()
+  @ApiQuery({ name: 'name', required: false })
+  @ApiQuery({ name: 'email', required: false })
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @Get()
-  findAll(@Request() request: any) {
+  findAll(
+    @Request() request: any,
+    @Query('name') name: string | undefined,
+    @Query('email') email: string | undefined,
+  ) {
     const userId: string = request.user.id;
-    return this.contactsService.findAll(userId);
+    return this.contactsService.findAll(userId, name, email);
   }
 
   @ApiBearerAuth()

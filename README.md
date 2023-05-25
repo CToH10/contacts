@@ -249,6 +249,8 @@ Expected result:
 <br>
 List all contacts registered to logged user.
 <br>
+Can provide query params <mark>name</mark> and <mark>email</mark> to find corresponding contacts.
+<br>
 Expected result:
 
 ```json
