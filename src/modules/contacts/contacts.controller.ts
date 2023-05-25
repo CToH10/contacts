@@ -10,6 +10,7 @@ import {
   UseGuards,
   UseInterceptors,
   Request,
+  HttpCode,
 } from '@nestjs/common';
 import { ContactsService } from './contacts.service';
 import { CreateContactDto } from './dto/create-contact.dto';
@@ -60,6 +61,7 @@ export class ContactsController {
   @UseGuards(JwtAuthGuard)
   @UseInterceptors(ClassSerializerInterceptor)
   @Delete(':id')
+  @HttpCode(204)
   remove(@Param('id') id: string) {
     return this.contactsService.remove(id);
   }

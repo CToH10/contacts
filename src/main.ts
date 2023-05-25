@@ -19,6 +19,7 @@ async function bootstrap() {
     .setDescription('Managing contacts API')
     .setVersion('1.0')
     .addTag('contacts')
+    .addBearerAuth()
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, document);
