@@ -26,6 +26,14 @@ And test it with:
 $ pnpm install
 ```
 
+## Before running
+
+You have to migrate the prisma models before running the API, so make sure to create and populate the `.env ` file according to the `.env.example`. After that, run the following command and inform the migration name.
+
+```bash
+$ npx prisma migrate dev
+```
+
 ## Running the app
 
 ```bash
